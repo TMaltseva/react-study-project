@@ -12,16 +12,22 @@
     "format:fix": "prettier --write ."
   },
   "dependencies": {
+<<<<<<< HEAD
     "@babel/core": "^7.24.7",
     "@babel/generator": "^7.24.7",
     "@babel/template": "^7.24.7",
+=======
+>>>>>>> e4ba2336b1f61939eea778ebcb7575228e8bc00e
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.6.8",
     "@types/babel__template": "^7.4.4",
+=======
+>>>>>>> e4ba2336b1f61939eea778ebcb7575228e8bc00e
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
