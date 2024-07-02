@@ -7,7 +7,8 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "types": ["node", "@types/babel__core", "@types/babel__generator", "@types/babel__template"]
   },
   "include": ["vite.config.ts"]
 }

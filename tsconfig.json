@@ -7,7 +7,9 @@
     "strict": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
-    "moduleResolution": "nodenext"
+    "moduleResolution": "nodenext",
+    "jsx": "react-jsx",
+    "types": ["@types/babel__core", "@types/babel__generator", "@types/babel__template"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"],
   "files": [],
