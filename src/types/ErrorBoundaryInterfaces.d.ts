@@ -1,9 +1,8 @@
-import React from 'react';
+import { ReactNode } from 'react';
 
 export interface Props {
-  children: React.ReactNode;
+  children: ReactNode;
 }
-
 export interface State {
   hasError: boolean;
 }

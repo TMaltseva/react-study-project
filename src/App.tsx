@@ -1,31 +1,42 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { Component } from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
+import SearchBar from './components/SearchBar';
+import SearchResults from './components/SearchResults';
+import ThrowErrorButton from './components/ErrorButton';
+import { fetchData } from './services/apiService';
+import { AppState } from './types/AppInterface';
 
-function App() {
-  const [count, setCount] = useState(0);
+export default class App extends Component<Record<string, never>, AppState> {
+  constructor(props: Record<string, never>) {
+    super(props);
+    this.state = { results: [], loading: false, hasError: false };
+  }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
-  );
+  componentDidMount() {
+    this.handleSearch(localStorage.getItem('searchTerm') || '');
+  }
+
+  handleSearch = async (searchTerm: string) => {
+    this.setState({ loading: true });
+    const results = await fetchData(searchTerm);
+    this.setState({ results, loading: false });
+  };
+
+  handleError = () => {
+    this.setState({ hasError: true });
+  };
+
+  render() {
+    return (
+      <ErrorBoundary>
+        <div className="top-section">
+          <SearchBar onSearch={this.handleSearch} />
+          <ThrowErrorButton onError={this.handleError} />
+        </div>
+        <div className="bottom-section">
+          {this.state.loading ? <p>Loading...</p> : <SearchResults results={this.state.results} />}
+        </div>
+      </ErrorBoundary>
+    );
+  }
 }
-
-export default App;

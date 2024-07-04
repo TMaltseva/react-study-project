@@ -1,7 +1,9 @@
-import './App.css';
-<<<<<<< HEAD
-declare function App(): import("react/jsx-runtime").JSX.Element;
-=======
-declare function App(): import('react/jsx-runtime').JSX.Element;
->>>>>>> e4ba2336b1f61939eea778ebcb7575228e8bc00e
-export default App;
+import { Component } from 'react';
+import { AppState } from './types/AppInterface';
+export default class App extends Component<Record<string, never>, AppState> {
+    constructor(props: Record<string, never>);
+    componentDidMount(): void;
+    handleSearch: (searchTerm: string) => Promise<void>;
+    handleError: () => void;
+    render(): import("react/jsx-runtime").JSX.Element;
+}
