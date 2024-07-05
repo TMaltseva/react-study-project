@@ -16,6 +16,10 @@ export default class ThrowErrorButton extends Component<ThrowErrorButtonProps, T
       throw new Error('Test error from ThrowErrorButton');
     }
 
-    return <button onClick={this.handleClick}>Throw Error</button>;
+    return (
+      <button className="throw-error-btn" onClick={this.handleClick}>
+        Throw Error
+      </button>
+    );
   }
 }

@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import ErrorBoundary from './components/ErrorBoundary';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import ThrowErrorButton from './components/ErrorButton';
@@ -28,7 +27,7 @@ export default class App extends Component<Record<string, never>, AppState> {
 
   render() {
     return (
-      <ErrorBoundary>
+      <div className="sections-wrapper">
         <div className="top-section">
           <SearchBar onSearch={this.handleSearch} />
           <ThrowErrorButton onError={this.handleError} />
@@ -36,7 +35,7 @@ export default class App extends Component<Record<string, never>, AppState> {
         <div className="bottom-section">
           {this.state.loading ? <p>Loading...</p> : <SearchResults results={this.state.results} />}
         </div>
-      </ErrorBoundary>
+      </div>
     );
   }
 }

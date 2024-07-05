@@ -23,7 +23,7 @@ export default class ErrorBoundary extends Component<Props, State> {
     if (this.state.hasError) {
       return (
         <div>
-          <h2>Something went wrong</h2>
+          <h2 className="error-message">Something went wrong</h2>
           <button onClick={this.handleGoToSearch}>Go Search</button>
         </div>
       );
