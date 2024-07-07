@@ -33,7 +33,7 @@ export default class App extends Component<Record<string, never>, AppState> {
 
   render() {
     return (
-      <div className="sections-wrapper">
+      <main className="sections-wrapper">
         <div className="top-section">
           <SearchBar onSearch={this.handleSearch} />
           <ThrowErrorButton onError={this.handleError} />
@@ -41,7 +41,7 @@ export default class App extends Component<Record<string, never>, AppState> {
         <div className="bottom-section">
           {this.state.loading ? <p>Loading...</p> : <SearchResults results={this.state.results} />}
         </div>
-      </div>
+      </main>
     );
   }
 }
