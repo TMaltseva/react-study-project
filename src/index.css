@@ -1,3 +1,5 @@
+@import url('./App.css');
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -65,86 +67,5 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
-  }
-}
-
-#root {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100vw;
-  margin-top: 40px;
-  gap: 40px;
-}
-
-#root button:not(.throw-error-btn) {
-  margin: 0 auto;
-  width: 150px;
-  height: 50px;
-}
-
-.top-section {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 40px;
-}
-
-.top-section div {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.bottom-section {
-  width: 90vw;
-}
-
-.bottom-section div {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 10px;
-}
-
-.bottom-section p {
-  width: 200px;
-  margin: 0 auto;
-}
-
-.bottom-section p:last-child {
-  margin-bottom: 20px;
-}
-
-.bottom-section-element {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
-  text-align: center;
-}
-
-.bottom-section-element h2 {
-  font-size: 1.2em;
-}
-
-#root div:first-child:not(.bottom-section-elements):not(.top-section):not(.top-section div) {
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.error-message {
-  font-size: 60px;
-  margin: auto 20px;
-  margin-bottom: 40px;
-}
-
-@media (max-width: 768px) {
-  .top-section,
-  .top-section div {
-    flex-direction: column;
-    gap: 20px;
   }
 }
