@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { SearchProps, SearchState } from '../types/SearchInterfaces';
+
+interface SearchProps {
+  onSearch: (term: string) => void;
+}
+
+interface SearchState {
+  searchTerm: string;
+}
 
 export default class SearchBar extends Component<SearchProps, SearchState> {
   constructor(props: SearchProps) {

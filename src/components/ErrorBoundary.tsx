@@ -1,5 +1,12 @@
 import { Component, ErrorInfo } from 'react';
-import { Props, State } from '../types/ErrorBoundaryInterfaces';
+
+interface Props {
+  children: React.ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+}
 
 export default class ErrorBoundary extends Component<Props, State> {
   constructor(props: Props) {

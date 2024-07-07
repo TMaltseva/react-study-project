@@ -1,5 +1,12 @@
 import { Component } from 'react';
-import { ThrowErrorButtonState, ThrowErrorButtonProps } from '../types/ErrorButtonInterfaces';
+
+interface ThrowErrorButtonProps {
+  onError: () => void;
+}
+
+interface ThrowErrorButtonState {
+  throwError: boolean;
+}
 
 export default class ThrowErrorButton extends Component<ThrowErrorButtonProps, ThrowErrorButtonState> {
   constructor(props: ThrowErrorButtonProps) {

@@ -3,7 +3,13 @@ import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
 import ThrowErrorButton from './components/ErrorButton';
 import { fetchData } from './services/apiService';
-import { AppState } from './types/AppInterface';
+import { SearchResult } from './components/SearchResults';
+
+interface AppState {
+  results: SearchResult[];
+  loading: boolean;
+  hasError: boolean;
+}
 
 export default class App extends Component<Record<string, never>, AppState> {
   constructor(props: Record<string, never>) {
