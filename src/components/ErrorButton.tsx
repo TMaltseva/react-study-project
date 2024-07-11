@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ThrowErrorButton: React.FC = () => {
+const ErrorButton: React.FC = () => {
   const [throwError, setThrowError] = useState(false);
 
   if (throwError) {
@@ -14,4 +14,4 @@ const ThrowErrorButton: React.FC = () => {
   );
 };
 
-export default ThrowErrorButton;
+export default ErrorButton;

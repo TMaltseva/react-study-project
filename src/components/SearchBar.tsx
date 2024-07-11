@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 interface SearchProps {
-  onSearch: (term: string) => void;
+  onSearch: (term: string, page: number) => void;
 }
 
 const useSearchTerm = () => {
@@ -26,7 +26,7 @@ const SearchBar: React.FC<SearchProps> = ({ onSearch }) => {
   const handleSearch = () => {
     const trimmedSearchTerm = searchTerm.trim();
     localStorage.setItem('searchTerm', trimmedSearchTerm);
-    onSearch(trimmedSearchTerm);
+    onSearch(trimmedSearchTerm, 1);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {

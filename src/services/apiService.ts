@@ -1,18 +1,15 @@
-// export const fetchData = async (searchTerm: string) => {
-//   const response = await fetch(`https://swapi.dev/api/people/?search=${searchTerm}`);
-//   const data = await response.json();
-//   return data.results;
-// };
-
-export const fetchData = (searchTerm: string) => {
-  return fetch(`https://swapi.dev/api/people/?search=${searchTerm}`)
+export const fetchData = (searchTerm: string, page: number = 1) => {
+  return fetch(`https://swapi.dev/api/people/?search=${searchTerm}&page=${page}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
     })
-    .then((data) => data.results)
+    .then((data) => ({
+      items: data.results,
+      totalPages: Math.ceil(data.count / 10),
+    }))
     .catch((error) => {
       console.error('Fetch error:', error);
       throw error;

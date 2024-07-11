@@ -112,6 +112,17 @@
   margin-bottom: 40px;
 }
 
+.pagination {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  margin: 0 5px;
+}
+
 @media (max-width: 768px) {
   .top-section,
   .top-section div {
