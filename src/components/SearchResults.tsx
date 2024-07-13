@@ -1,35 +1,33 @@
-import React from 'react';
-
 export interface SearchResult {
   name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-  gender: string;
+  url: string;
 }
 
 interface SearchResultsProps {
   results: SearchResult[];
+  onItemClick: (id: string) => void;
 }
 
-const SearchResults: React.FC<SearchResultsProps> = ({ results }) => {
+const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) => {
+  const extractIdFromUrl = (url: string) => {
+    const match = url.match(/\/(\d+)\/$/);
+    return match ? match[1] : null;
+  };
+
+  if (results.length === 0) {
+    return <p>Nothing found</p>;
+  }
+
   return (
     <div className="bottom-section-elements">
-      {results.map((result, index) => (
-        <div className="bottom-section-element" key={index}>
-          <h2>{result.name}</h2>
-          <p>Height: {result.height}</p>
-          <p>Mass: {result.mass}</p>
-          <p>Hair Color: {result.hair_color}</p>
-          <p>Skin Color: {result.skin_color}</p>
-          <p>Eye Color: {result.eye_color}</p>
-          <p>Birth Year: {result.birth_year}</p>
-          <p>Gender: {result.gender}</p>
-        </div>
-      ))}
+      {results.map((result, index) => {
+        const id = extractIdFromUrl(result.url);
+        return (
+          <div className="bottom-section-element" key={index} onClick={() => id && onItemClick(id)}>
+            <h2>{result.name}</h2>
+          </div>
+        );
+      })}
     </div>
   );
 };
