@@ -1,4 +1,5 @@
 import type { Config } from '@jest/types';
+import 'whatwg-fetch';
 
 const config: Config.InitialOptions = {
   preset: 'ts-jest',
