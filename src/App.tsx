@@ -1,47 +1,102 @@
-import { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { Routes, Route, useSearchParams } from 'react-router-dom';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
-import ThrowErrorButton from './components/ErrorButton';
-import { fetchData } from './services/apiService';
+import ErrorButton from './components/ErrorButton';
+import { fetchData } from './services/fetchData';
 import { SearchResult } from './components/SearchResults';
+import NotFound from './components/NotFound';
+import Pagination from './components/Pagination';
+import CardDetails from './components/CardDetails';
 
-interface AppState {
-  results: SearchResult[];
-  loading: boolean;
-  hasError: boolean;
-}
+const App: React.FC = () => {
+  const [results, setResults] = useState<SearchResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
-export default class App extends Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = { results: [], loading: false, hasError: false };
-  }
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  componentDidMount() {
-    this.handleSearch(localStorage.getItem('searchTerm') || '');
-  }
+  const handleSearch = useCallback(
+    async (searchTerm: string, page: number = 1) => {
+      setLoading(true);
+      setCurrentPage(page);
+      setSearchParams({ page: page.toString(), search: searchTerm, details: selectedId || '' });
+      try {
+        const results = await fetchData(searchTerm, page);
+        setResults(results.items);
+        setTotalPages(results.totalPages);
+      } catch (error) {
+        console.error('Search error:', error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setSearchParams, selectedId],
+  );
 
-  handleSearch = async (searchTerm: string) => {
-    this.setState({ loading: true });
-    const results = await fetchData(searchTerm);
-    this.setState({ results, loading: false });
+  useEffect(() => {
+    const page = parseInt(searchParams.get('page') || '1', 10);
+    const searchTerm = searchParams.get('search') || '';
+    const detailsId = searchParams.get('details');
+
+    if (page > 0) {
+      setCurrentPage(page);
+      handleSearch(searchTerm, page);
+    }
+
+    if (detailsId) {
+      setSelectedId(detailsId);
+    }
+  }, [searchParams, handleSearch]);
+
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: page.toString(), search: searchParams.get('search') || '', details: selectedId || '' });
   };
 
-  handleError = () => {
-    this.setState({ hasError: true });
+  const handleItemClick = (id: string) => {
+    setSelectedId(id);
+    setSearchParams({ page: currentPage.toString(), search: searchParams.get('search') || '', details: id });
   };
 
-  render() {
-    return (
-      <main className="sections-wrapper">
-        <div className="top-section">
-          <SearchBar onSearch={this.handleSearch} />
-          <ThrowErrorButton onError={this.handleError} />
-        </div>
-        <div className="bottom-section">
-          {this.state.loading ? <p>Loading...</p> : <SearchResults results={this.state.results} />}
-        </div>
-      </main>
-    );
-  }
-}
+  const handleCloseDetails = () => {
+    setSelectedId(null);
+    setSearchParams({ page: currentPage.toString(), search: searchParams.get('search') || '' });
+  };
+
+  return (
+    <main className="sections-wrapper">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="top-section">
+                <SearchBar onSearch={(term) => handleSearch(term, 1)} />
+                <ErrorButton />
+              </div>
+              <div className="bottom-section">
+                <div className="left-section">
+                  {loading ? <p>Loading...</p> : <SearchResults results={results} onItemClick={handleItemClick} />}
+                </div>
+                {selectedId && (
+                  <div className="right-section">
+                    <button onClick={handleCloseDetails}>Close</button>
+                    <CardDetails id={selectedId} />
+                  </div>
+                )}
+              </div>
+              {results.length > 0 && (
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+              )}
+            </>
+          }
+        />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
+  );
+};
+
+export default App;

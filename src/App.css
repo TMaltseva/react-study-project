@@ -1,7 +1,7 @@
 #root {
+  padding: 10px;
   max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 20px auto;
   text-align: center;
 }
 
@@ -47,7 +47,6 @@
   align-items: center;
   flex-direction: column;
   width: 100vw;
-  margin-top: 40px;
   gap: 40px;
 }
 
@@ -70,18 +69,18 @@
 }
 
 .bottom-section {
-  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 40px;
 }
 
-.bottom-section div {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 10px;
+.bottom-section:not(:has(.right-section)) {
+  justify-content: center;
 }
 
 .bottom-section p {
-  width: 200px;
-  margin: 0 auto;
+  margin: 10px 0;
 }
 
 .bottom-section p:last-child {
@@ -89,28 +88,72 @@
 }
 
 .bottom-section-element {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 10px;
+  cursor: pointer;
+}
+
+.details {
+  padding: 20px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.details h2,
+.details p {
+  text-align: end !important;
 }
 
 .bottom-section-element h2 {
   font-size: 1.2em;
-}
-
-#root div:first-child:not(.bottom-section-elements):not(.top-section):not(.top-section div) {
-  display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  text-align: start;
 }
 
 .error-message {
   font-size: 60px;
   margin: auto 20px;
   margin-bottom: 40px;
+}
+
+.pagination {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px
+}
+
+.pagination button {
+  margin: 0 5px;
+  width: 70px !important;
+}
+
+.left-section {
+  border-right: 1px solid #ccc;
+  padding-right: 30px;
+}
+
+.left-section:not(:has(+ .right-section)) {
+  border-right: none;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 2;
+}
+
+.right-section button {
+  margin-top: 10px;
+}
+
+.bottom-section-element h2 {
+  padding: 5px;
+}
+
+.bottom-section-element h2:hover {
+  color: #646cffaa;
 }
 
 @media (max-width: 768px) {
@@ -122,5 +165,9 @@
 
   .throw-error-btn {
     margin: 0 auto;
+  }
+
+  .bottom-section-element h2 {
+    font-size: 1em;
   }
 }
