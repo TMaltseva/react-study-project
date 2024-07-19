@@ -8,7 +8,7 @@ import NotFound from './components/NotFound';
 import Pagination from './components/Pagination';
 import DetailsWrapper from './components/DetailsWrapper';
 import ThemeToggleButton from './components/ThemeToggleButton';
-import { useTheme } from './components/ThemeProvider';
+import { useTheme } from './services/themeContext';
 
 const App: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
