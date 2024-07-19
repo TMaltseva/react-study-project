@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import SearchResults, { SearchResult } from '../src/components/SearchResults';
 import '@testing-library/jest-dom';
+import { MemoryRouter } from 'react-router-dom';
+
 
 describe('SearchResults Component', () => {
   const mockResults: SearchResult[] = [
@@ -11,7 +13,11 @@ describe('SearchResults Component', () => {
   const onItemClick = jest.fn();
 
   it('should render the specified number of cards', () => {
-    render(<SearchResults results={mockResults} onItemClick={onItemClick} />);
+    render(
+      <MemoryRouter>
+        <SearchResults results={mockResults} onItemClick={onItemClick} />
+      </MemoryRouter>
+    );
     expect(screen.getAllByRole('heading')).toHaveLength(mockResults.length);
   });
 
