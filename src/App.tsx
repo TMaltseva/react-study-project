@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
 import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
@@ -17,6 +17,10 @@ const App: React.FC = () => {
   const { data, isLoading } = useFetchPeopleQuery({ searchTerm, page });
   const { theme } = useTheme();
 
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
   const handleSearch = useCallback(
     (term: string, page: number = 1) => {
       setSearchParams({ page: page.toString(), search: term });
@@ -33,7 +37,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <main className={`sections-wrapper ${theme}`}>
+    <main className="sections-wrapper">
       <Routes>
         <Route
           path="/"
