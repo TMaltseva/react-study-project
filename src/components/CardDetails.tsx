@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { fetchDetails } from '../services/fetchDetails';
+import React from 'react';
 
 interface Details {
   name: string;
@@ -13,36 +12,10 @@ interface Details {
 }
 
 interface CardDetailsProps {
-  id: string;
+  details: Details;
 }
 
-const CardDetails: React.FC<CardDetailsProps> = ({ id }) => {
-  const [details, setDetails] = useState<Details | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchDetailsData = async () => {
-      try {
-        const data = await fetchDetails(id);
-        setDetails(data);
-      } catch (error) {
-        console.error('Error fetching details:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetailsData();
-  }, [id]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (!details) {
-    return <p>No details available</p>;
-  }
-
+const CardDetails: React.FC<CardDetailsProps> = ({ details }) => {
   return (
     <div className="details">
       <h2>{details.name}</h2>

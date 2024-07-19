@@ -156,6 +156,20 @@
   color: #646cffaa;
 }
 
+body.light {
+  background-color: #ccc;
+  color: black;
+}
+
+body.light #search-input {
+  border-color: #ccc;
+}
+
+body.dark {
+  background-color: black;
+  color: #ccc;
+}
+
 @media (max-width: 768px) {
   .top-section,
   .top-section div {
