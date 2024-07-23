@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
 import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
@@ -8,18 +8,11 @@ import NotFound from './components/NotFound';
 import Pagination from './components/Pagination';
 import DetailsWrapper from './components/DetailsWrapper';
 import ThemeToggleButton from './components/ThemeToggleButton';
-import { useTheme } from './services/themeContext';
-
 const App: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get('search') || '';
   const page = parseInt(searchParams.get('page') || '1', 10);
   const { data, isLoading } = useFetchPeopleQuery({ searchTerm, page });
-  const { theme } = useTheme();
-
-  useEffect(() => {
-    document.body.className = theme;
-  }, [theme]);
 
   const handleSearch = useCallback(
     (term: string, page: number = 1) => {
