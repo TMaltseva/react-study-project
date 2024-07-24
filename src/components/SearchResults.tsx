@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export interface SearchResult {
   name: string;
@@ -13,6 +13,7 @@ interface SearchResultsProps {
 
 const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const extractIdFromUrl = (url: string) => {
     const match = url.match(/\/(\d+)\/$/);
@@ -34,7 +35,10 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) =
             onClick={() => {
               if (id) {
                 onItemClick(id);
-                navigate(`/details/${id}`);
+                navigate({
+                  pathname: `/details/${id}`,
+                  search: searchParams.toString(),
+                });
               }
             }}
           >

@@ -5,7 +5,7 @@ interface PeopleResponse {
   count: number;
 }
 
-interface Person {
+export interface Person {
   name: string;
   height: string;
   mass: string;
