@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
 import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const searchTerm = searchParams.get('search') || '';
   const page = parseInt(searchParams.get('page') || '1', 10);
-  const { data, isLoading } = useFetchPeopleQuery({ searchTerm, page });
+  const { data, isLoading, isFetching } = useFetchPeopleQuery({ searchTerm, page });
 
   const handleSearch = useCallback(
     (term: string, page: number = 1) => {
@@ -31,8 +31,11 @@ const App: React.FC = () => {
     setSearchParams({ page: page.toString(), search: searchParams.get('search') || '', details: id });
   };
 
-  console.log('isLoading:', isLoading);
-  console.log('data:', data);
+  useEffect(() => {
+    console.log('isLoading:', isLoading);
+    console.log('isFetching:', isFetching);
+    console.log('data:', data);
+  }, [isLoading, isFetching, data]);
 
   return (
     <main className="sections-wrapper">
@@ -49,7 +52,7 @@ const App: React.FC = () => {
               </div>
               <div className="bottom-section">
                 <div className="left-section">
-                  {isLoading ? (
+                  {isLoading || isFetching ? (
                     <p>Loading...</p>
                   ) : (
                     <SearchResults results={data?.results || []} onItemClick={handleItemClick} />
