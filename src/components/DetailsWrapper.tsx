@@ -7,7 +7,7 @@ const DetailsWrapper: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { data, isLoading } = useFetchDetailsQuery(id!);
+  const { data, isLoading, error } = useFetchDetailsQuery(id!);
 
   const handleCloseDetails = () => {
     navigate({
@@ -19,6 +19,12 @@ const DetailsWrapper: React.FC = () => {
   if (isLoading) {
     return <p>Loading...</p>;
   }
+
+  if (error) {
+    return <p>Error loading details</p>;
+  }
+
+  console.log('Fetched data:', data);
 
   return (
     <div className="right-section">

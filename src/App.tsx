@@ -8,6 +8,7 @@ import NotFound from './components/NotFound';
 import Pagination from './components/Pagination';
 import DetailsWrapper from './components/DetailsWrapper';
 import ThemeToggleButton from './components/ThemeToggleButton';
+import Flyout from './components/Flyout';
 
 const App: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -30,6 +31,9 @@ const App: React.FC = () => {
     setSearchParams({ page: page.toString(), search: searchParams.get('search') || '', details: id });
   };
 
+  console.log('isLoading:', isLoading);
+  console.log('data:', data);
+
   return (
     <main className="sections-wrapper">
       <Routes>
@@ -41,6 +45,7 @@ const App: React.FC = () => {
                 <SearchBar onSearch={(term) => handleSearch(term, 1)} />
                 <ErrorButton />
                 <ThemeToggleButton />
+                <Flyout />
               </div>
               <div className="bottom-section">
                 <div className="left-section">
