@@ -97,6 +97,8 @@
 }
 
 .bottom-section-element {
+  display: flex;
+  align-items: center;
   cursor: pointer;
 }
 
@@ -125,6 +127,7 @@
   font-size: 1.2em;
   text-align: start;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 .error-message {

@@ -44,7 +44,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) =
         const id = extractIdFromUrl(result.url);
         const isSelected = selectedItems.some((item) => item.url === result.url);
         return (
-          <div className="bottom-section-element" key={index} style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="bottom-section-element" key={index}>
             <input
               type="checkbox"
               checked={isSelected}
@@ -61,7 +61,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) =
                   });
                 }
               }}
-              style={{ marginLeft: '10px', cursor: 'pointer' }}
             >
               {result.name}
             </h2>
