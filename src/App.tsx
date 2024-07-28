@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
 import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
@@ -16,12 +16,9 @@ const App: React.FC = () => {
   const page = parseInt(searchParams.get('page') || '1', 10);
   const { data, isLoading, isFetching } = useFetchPeopleQuery({ searchTerm, page });
 
-  const handleSearch = useCallback(
-    (term: string, page: number = 1) => {
-      setSearchParams({ page: page.toString(), search: term });
-    },
-    [setSearchParams],
-  );
+  const handleSearch = (term: string, page: number = 1) => {
+    setSearchParams({ page: page.toString(), search: term });
+  };
 
   const handlePageChange = (page: number) => {
     setSearchParams({ page: page.toString(), search: searchParams.get('search') || '' });
