@@ -24,8 +24,6 @@ const DetailsWrapper: React.FC = () => {
     return <p>Error loading details</p>;
   }
 
-  console.log('Fetched data:', data);
-
   return (
     <div className="right-section">
       <button onClick={handleCloseDetails}>Close</button>

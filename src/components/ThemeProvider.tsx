@@ -3,8 +3,8 @@ import { ThemeContext, Theme } from '../services/themeContext';
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return (savedTheme as Theme) || 'light';
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    return savedTheme || 'light';
   });
 
   const toggleTheme = () => {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
 import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
@@ -30,12 +30,6 @@ const App: React.FC = () => {
   const handleItemClick = (id: string) => {
     setSearchParams({ page: page.toString(), search: searchParams.get('search') || '', details: id });
   };
-
-  useEffect(() => {
-    console.log('isLoading:', isLoading);
-    console.log('isFetching:', isFetching);
-    console.log('data:', data);
-  }, [isLoading, isFetching, data]);
 
   return (
     <main className="sections-wrapper">

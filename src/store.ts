@@ -3,7 +3,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { api } from './services/api';
 import selectedItemsReducer from './services/selectedItemsSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
     selectedItems: selectedItemsReducer,
