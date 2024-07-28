@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorButton component renders correctly 1`] = `
+<button
+  className="throw-error-btn"
+  onClick={[Function]}
+>
+  Throw Error
+</button>
+`;

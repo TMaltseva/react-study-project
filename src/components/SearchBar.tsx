@@ -1,50 +1,54 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface SearchProps {
-  onSearch: (term: string) => void;
+  onSearch: (term: string, page: number) => void;
 }
 
-interface SearchState {
-  searchTerm: string;
-}
+const useSearchTerm = () => {
+  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('searchTerm') || '');
 
-export default class SearchBar extends Component<SearchProps, SearchState> {
-  constructor(props: SearchProps) {
-    super(props);
-    const savedSearchTerm = localStorage.getItem('searchTerm') || '';
-    this.state = { searchTerm: savedSearchTerm };
-  }
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('searchTerm', searchTerm);
+    };
+  }, [searchTerm]);
 
-  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchTerm: event.target.value });
+  return [searchTerm, setSearchTerm] as const;
+};
+
+const SearchBar: React.FC<SearchProps> = ({ onSearch }) => {
+  const [searchTerm, setSearchTerm] = useSearchTerm();
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
   };
 
-  handleSearch = () => {
-    const trimmedSearchTerm = this.state.searchTerm.trim();
+  const handleSearch = () => {
+    const trimmedSearchTerm = searchTerm.trim();
     localStorage.setItem('searchTerm', trimmedSearchTerm);
-    this.props.onSearch(trimmedSearchTerm);
+    onSearch(trimmedSearchTerm, 1);
   };
 
-  handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      this.handleSearch();
+      handleSearch();
     }
   };
 
-  render() {
-    return (
-      <div>
-        <label htmlFor="search-input">Search:</label>
-        <input
-          id="search-input"
-          type="text"
-          value={this.state.searchTerm}
-          onChange={this.handleInputChange}
-          onKeyDown={this.handleKeyDown}
-          aria-label="Search input"
-        />
-        <button onClick={this.handleSearch}>Search</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <label htmlFor="search-input">Search:</label>
+      <input
+        id="search-input"
+        type="text"
+        value={searchTerm}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        aria-label="Search input"
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
+};
+
+export default SearchBar;

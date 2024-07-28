@@ -1,47 +1,68 @@
-import { Component } from 'react';
+import React from 'react';
+import { Routes, Route, useSearchParams, Outlet } from 'react-router-dom';
+import { useFetchPeopleQuery } from './services/api';
 import SearchBar from './components/SearchBar';
 import SearchResults from './components/SearchResults';
-import ThrowErrorButton from './components/ErrorButton';
-import { fetchData } from './services/apiService';
-import { SearchResult } from './components/SearchResults';
+import ErrorButton from './components/ErrorButton';
+import NotFound from './components/NotFound';
+import Pagination from './components/Pagination';
+import DetailsWrapper from './components/DetailsWrapper';
+import ThemeToggleButton from './components/ThemeToggleButton';
+import Flyout from './components/Flyout';
 
-interface AppState {
-  results: SearchResult[];
-  loading: boolean;
-  hasError: boolean;
-}
+const App: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get('search') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
+  const { data, isLoading, isFetching } = useFetchPeopleQuery({ searchTerm, page });
 
-export default class App extends Component<Record<string, never>, AppState> {
-  constructor(props: Record<string, never>) {
-    super(props);
-    this.state = { results: [], loading: false, hasError: false };
-  }
-
-  componentDidMount() {
-    this.handleSearch(localStorage.getItem('searchTerm') || '');
-  }
-
-  handleSearch = async (searchTerm: string) => {
-    this.setState({ loading: true });
-    const results = await fetchData(searchTerm);
-    this.setState({ results, loading: false });
+  const handleSearch = (term: string, page: number = 1) => {
+    setSearchParams({ page: page.toString(), search: term });
   };
 
-  handleError = () => {
-    this.setState({ hasError: true });
+  const handlePageChange = (page: number) => {
+    setSearchParams({ page: page.toString(), search: searchParams.get('search') || '' });
   };
 
-  render() {
-    return (
-      <main className="sections-wrapper">
-        <div className="top-section">
-          <SearchBar onSearch={this.handleSearch} />
-          <ThrowErrorButton onError={this.handleError} />
-        </div>
-        <div className="bottom-section">
-          {this.state.loading ? <p>Loading...</p> : <SearchResults results={this.state.results} />}
-        </div>
-      </main>
-    );
-  }
-}
+  const handleItemClick = (id: string) => {
+    setSearchParams({ page: page.toString(), search: searchParams.get('search') || '', details: id });
+  };
+
+  return (
+    <main className="sections-wrapper">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <div className="top-section">
+                <SearchBar onSearch={(term) => handleSearch(term, 1)} />
+                <ErrorButton />
+                <ThemeToggleButton />
+                <Flyout />
+              </div>
+              <div className="bottom-section">
+                <div className="left-section">
+                  {isLoading || isFetching ? (
+                    <p>Loading...</p>
+                  ) : (
+                    <SearchResults results={data?.results || []} onItemClick={handleItemClick} />
+                  )}
+                </div>
+                <Outlet />
+              </div>
+              {data?.results?.length ? (
+                <Pagination currentPage={page} totalPages={data.totalPages} onPageChange={handlePageChange} />
+              ) : null}
+            </>
+          }
+        >
+          <Route path="details/:id" element={<DetailsWrapper />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </main>
+  );
+};
+
+export default App;

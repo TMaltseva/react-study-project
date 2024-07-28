@@ -1,32 +1,17 @@
-import { Component } from 'react';
+import React, { useState } from 'react';
 
-interface ThrowErrorButtonProps {
-  onError: () => void;
-}
+const ErrorButton: React.FC = () => {
+  const [throwError, setThrowError] = useState(false);
 
-interface ThrowErrorButtonState {
-  throwError: boolean;
-}
-
-export default class ThrowErrorButton extends Component<ThrowErrorButtonProps, ThrowErrorButtonState> {
-  constructor(props: ThrowErrorButtonProps) {
-    super(props);
-    this.state = { throwError: false };
+  if (throwError) {
+    throw new Error('Test error from ThrowErrorButton');
   }
 
-  handleClick = () => {
-    this.setState({ throwError: true });
-  };
+  return (
+    <button className="throw-error-btn" onClick={() => setThrowError(true)}>
+      Throw Error
+    </button>
+  );
+};
 
-  render() {
-    if (this.state.throwError) {
-      throw new Error('Test error from ThrowErrorButton');
-    }
-
-    return (
-      <button className="throw-error-btn" onClick={this.handleClick}>
-        Throw Error
-      </button>
-    );
-  }
-}
+export default ErrorButton;

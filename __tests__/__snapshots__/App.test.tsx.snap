@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders App component correctly 1`] = `
+<DocumentFragment>
+  <main
+    class="sections-wrapper"
+  >
+    <div
+      class="top-section"
+    >
+      <div>
+        <label
+          for="search-input"
+        >
+          Search:
+        </label>
+        <input
+          aria-label="Search input"
+          id="search-input"
+          type="text"
+          value=""
+        />
+        <button>
+          Search
+        </button>
+      </div>
+      <button
+        class="throw-error-btn"
+      >
+        Throw Error
+      </button>
+      <button
+        class="theme-btn"
+      >
+        To dark theme
+      </button>
+      <div
+        class="flyout "
+      />
+    </div>
+    <div
+      class="bottom-section"
+    >
+      <div
+        class="left-section"
+      >
+        <p>
+          Loading...
+        </p>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
