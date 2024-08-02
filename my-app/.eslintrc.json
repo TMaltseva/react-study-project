@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "next/core-web-vitals"
+  ],
+  "ignorePatterns": ["dist", ".eslintrc.cjs", "**/*.d.ts", "__tests__/*"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "tsconfigRootDir": "./my-app"
+  },
+  "plugins": ["react-refresh", "react", "@typescript-eslint", "react-compiler"],
+  "rules": {
+    "react/no-typos": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "prettier/prettier": "error",
+    "react/prop-types": "off",
+    "react/react-in-jsx-scope": "off",
+    "react-compiler/react-compiler": "error",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
