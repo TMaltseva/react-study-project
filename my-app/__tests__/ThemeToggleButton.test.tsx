@@ -1,13 +1,23 @@
-import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ThemeProvider } from '../src/components/ThemeProvider';
 import ThemeToggleButton from '../src/components/ThemeToggleButton';
+import '@testing-library/jest-dom';
 
-test('renders ThemeToggleButton', () => {
-  const { getByText } = render(
-    <ThemeProvider>
-      <ThemeToggleButton />
-    </ThemeProvider>
-  );
-  expect(getByText(/toggle theme/i)).toBeInTheDocument();
+describe('ThemeToggleButton', () => {
+  it('toggles theme between light and dark', () => {
+    render(
+      <ThemeProvider>
+        <ThemeToggleButton />
+      </ThemeProvider>
+    );
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveTextContent('Switch to dark');
+
+    fireEvent.click(button);
+    expect(button).toHaveTextContent('Switch to light');
+
+    fireEvent.click(button);
+    expect(button).toHaveTextContent('Switch to dark');
+  });
 });
