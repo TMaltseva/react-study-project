@@ -1,17 +1,10 @@
-import type { Config } from '@jest/types';
-import 'whatwg-fetch';
-
-const config: Config.InitialOptions = {
+module.exports = {
   preset: 'ts-jest',
-  // setupFilesAfterEnv: ['<rootDir>/setupTests.ts'],
-  testEnvironment: 'jest-environment-jsdom',
-  moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+  testEnvironment: 'jsdom',
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+    '^.+\\.(js|jsx)$': 'babel-jest',
   },
-  coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov'],
-  collectCoverageFrom: ['my-app/**/*.{ts,tsx}', '!my-app/**/*.d.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
-
-export default config;
