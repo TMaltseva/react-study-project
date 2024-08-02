@@ -4,7 +4,6 @@ import { AppProps } from 'next/app';
 import { wrapper } from '../store/store';
 import ThemeProvider from './ThemeProvider';
 import ErrorBoundary from './ErrorBoundary';
-import '../styles/globals.css';
 
 const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   const { store, props } = wrapper.useWrappedStore(pageProps);
