@@ -4,6 +4,9 @@ export default {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest',
   },
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transformIgnorePatterns: ['<rootDir>/node_modules/'],
 };
