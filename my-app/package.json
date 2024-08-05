@@ -16,11 +16,13 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "file-saver": "^2.0.5",
+    "jest-fetch-mock": "^3.0.3",
     "next": "^14.2.5",
     "next-redux-wrapper": "^8.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "react-redux": "^9.1.2"
+    "react-redux": "^9.1.2",
+    "redux-mock-store": "^1.5.4"
   },
   "devDependencies": {
     "@babel/generator": "^7.24.7",
@@ -37,6 +39,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-test-renderer": "^18.3.0",
+    "@types/redux-mock-store": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.0",
