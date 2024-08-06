@@ -19,10 +19,12 @@
     "jest-fetch-mock": "^3.0.3",
     "next": "^14.2.5",
     "next-redux-wrapper": "^8.1.0",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-dom": "^18",
     "react-redux": "^9.1.2",
-    "redux-mock-store": "^1.5.4"
+    "redux-mock-store": "^1.5.4",
+    "redux-thunk": "^3.1.0"
   },
   "devDependencies": {
     "@babel/generator": "^7.24.7",
