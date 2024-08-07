@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useFetchPeopleQuery } from '../services/api';
 import SearchBar from '../components/SearchBar';
 import SearchResults from '../components/SearchResults';
@@ -9,25 +11,22 @@ import DetailsWrapper from '../components/DetailsWrapper';
 import ThemeToggleButton from '../components/ThemeToggleButton';
 import Flyout from '../components/Flyout';
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const router = useRouter();
-  const searchTerm = (router.query.search as string) || '';
-  const page = parseInt((router.query.page as string) || '1', 10);
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get('search') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
   const { data, isLoading, isFetching } = useFetchPeopleQuery({ searchTerm, page });
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleSearch = (term: string, page: number = 1) => {
-    router.push({
-      pathname: '/',
-      query: { page: page.toString(), search: term },
-    });
+    const params = new URLSearchParams({ page: page.toString(), search: term });
+    router.push(`/?${params.toString()}`);
   };
 
   const handlePageChange = (page: number) => {
-    router.push({
-      pathname: '/',
-      query: { page: page.toString(), search: (router.query.search as string) || '' },
-    });
+    const params = new URLSearchParams({ page: page.toString(), search: searchTerm });
+    router.push(`/?${params.toString()}`);
   };
 
   const handleItemClick = (id: string) => {
@@ -65,4 +64,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;
