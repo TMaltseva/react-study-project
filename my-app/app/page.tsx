@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import App from './App';
+import Home from './Home';
 
 const Page: React.FC = () => {
-  return <App />;
+  return <Home />;
 };
 
 export default Page;
