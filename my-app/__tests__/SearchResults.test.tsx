@@ -1,10 +1,10 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import SearchResults, { SearchResult } from '../src/components/SearchResults';
-import { RootState } from '../src/store/store';
-import { addItem, removeItem } from '../src/services/selectedItemsSlice';
-import { api } from '../src/services/api';
+import SearchResults, { SearchResult } from '../components/SearchResults';
+import { RootState } from '../store/store';
+import { addItem, removeItem } from '../services/selectedItemsSlice';
+import { api } from '../services/api';
 import '@testing-library/jest-dom';
 
 

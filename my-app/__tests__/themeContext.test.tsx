@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ThemeContext, useTheme, ThemeContextProps, Theme } from '../src/services/themeContext';
+import { ThemeContext, useTheme, ThemeContextProps, Theme } from '../services/themeContext';
 
 const TestComponent: React.FC = () => {
   const { theme, toggleTheme } = useTheme();

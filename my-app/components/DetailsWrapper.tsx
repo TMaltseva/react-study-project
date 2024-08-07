@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useFetchDetailsQuery } from '../services/api';
 import CardDetails from './CardDetails';

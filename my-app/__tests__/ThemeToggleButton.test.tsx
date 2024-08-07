@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from '../src/components/ThemeProvider';
-import ThemeToggleButton from '../src/components/ThemeToggleButton';
+import { ThemeProvider } from '../components/ThemeProvider';
+import ThemeToggleButton from '../components/ThemeToggleButton';
 import '@testing-library/jest-dom';
 
 describe('ThemeToggleButton', () => {

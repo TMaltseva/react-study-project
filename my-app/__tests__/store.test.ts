@@ -1,5 +1,5 @@
-import { makeStore } from '../src/store/store';
-import { api } from '../src/services/api';
+import { makeStore } from '../store/store';
+import { api } from '../services/api';
 
 describe('Redux Store', () => {
   it('should create a store with the correct reducers and middleware', () => {

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CardDetails from '../src/components/CardDetails';
+import CardDetails from '../components/CardDetails';
 
 test('renders CardDetails with correct details', () => {
   const details = {

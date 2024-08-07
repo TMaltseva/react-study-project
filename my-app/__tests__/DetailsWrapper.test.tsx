@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useFetchDetailsQuery } from '../src/services/api';
-import DetailsWrapper from '../src/components/DetailsWrapper';
+import { useFetchDetailsQuery } from '../services/api';
+import DetailsWrapper from '../components/DetailsWrapper';
 
 jest.mock('../src/services/api');
 

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ErrorButton from '../src/components/ErrorButton';
+import ErrorButton from '../components/ErrorButton';
 import '@testing-library/jest-dom';
 
 describe('ErrorButton Component', () => {

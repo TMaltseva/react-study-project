@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import ErrorBoundary from '../src/components/ErrorBoundary';
-import ErrorButton from '../src/components/ErrorButton';
+import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorButton from '../components/ErrorButton';
 import '@testing-library/jest-dom';
 
 describe('ErrorBoundary Component', () => {
