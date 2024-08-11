@@ -1,8 +1,8 @@
 import React from 'react';
-import ClientSearchPage from '../components/ClientSearchPage';
+import ClientApp from '../components/ClientApp';
 
 const SearchPage: React.FC = () => {
-  return <ClientSearchPage />;
+  return <ClientApp />;
 };
 
 export default SearchPage;
