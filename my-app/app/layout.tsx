@@ -1,5 +1,6 @@
-import React from 'react';
 import './styles/globals.css';
+import React from 'react';
+import { Providers } from './providers';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,7 +8,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <link rel="icon" href="/app/favicon.ico" />
       </head>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
