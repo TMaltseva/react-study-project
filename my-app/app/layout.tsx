@@ -1,26 +1,13 @@
-'use client';
-
 import React from 'react';
-import ProviderWrapper from './ProviderWrapper';
-import ThemeProvider from '../components/ThemeProvider';
-import ErrorBoundary from '../components/ErrorBoundary';
-import '../styles/globals.css';
+import './styles/globals.css';
 
-const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html>
       <head>
         <link rel="icon" href="/app/favicon.ico" />
       </head>
-      <body>
-        <ErrorBoundary>
-          <ProviderWrapper>
-            <ThemeProvider>{children}</ThemeProvider>
-          </ProviderWrapper>
-        </ErrorBoundary>
-      </body>
+      <body>{children}</body>
     </html>
   );
-};
-
-export default RootLayout;
+}

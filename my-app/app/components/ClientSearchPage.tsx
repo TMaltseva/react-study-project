@@ -1,18 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { useFetchPeopleQuery } from '../services/api';
-import SearchBar from '../components/SearchBar';
-import SearchResults from '../components/SearchResults';
-import ErrorButton from '../components/ErrorButton';
-import Pagination from '../components/Pagination';
-import DetailsWrapper from '../components/DetailsWrapper';
-import ThemeToggleButton from '../components/ThemeToggleButton';
-import Flyout from '../components/Flyout';
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
+import Pagination from './Pagination';
+import DetailsWrapper from './DetailsWrapper';
+import ThemeToggleButton from './ThemeToggleButton';
+import Flyout from './Flyout';
 
-const Home: React.FC = () => {
-  const router = useRouter();
+const ClientSearchPage: React.FC = () => {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get('search') || '';
   const page = parseInt(searchParams.get('page') || '1', 10);
@@ -21,12 +19,12 @@ const Home: React.FC = () => {
 
   const handleSearch = (term: string, page: number = 1) => {
     const params = new URLSearchParams({ page: page.toString(), search: term });
-    router.push(`/?${params.toString()}`);
+    window.history.pushState({}, '', `/?${params.toString()}`);
   };
 
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams({ page: page.toString(), search: searchTerm });
-    router.push(`/?${params.toString()}`);
+    window.history.pushState({}, '', `/?${params.toString()}`);
   };
 
   const handleItemClick = (id: string) => {
@@ -41,7 +39,6 @@ const Home: React.FC = () => {
     <main className="sections-wrapper">
       <div className="top-section">
         <SearchBar onSearch={(term) => handleSearch(term, 1)} />
-        <ErrorButton />
         <ThemeToggleButton />
         <Flyout />
       </div>
@@ -64,4 +61,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default ClientSearchPage;

@@ -211,6 +211,10 @@
     display: flex;
     flex-direction: column;
   }
+
+  .throw-error-btn {
+    width: 100%;
+  }
   
   @media (max-width: 768px) {
     .top-section,

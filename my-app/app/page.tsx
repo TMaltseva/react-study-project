@@ -1,10 +1,6 @@
-'use client';
-
 import React from 'react';
-import Home from './Home';
+import ClientApp from './components/ClientApp';
 
-const Page: React.FC = () => {
-  return <Home />;
-};
-
-export default Page;
+export default function Page() {
+  return <ClientApp />;
+}

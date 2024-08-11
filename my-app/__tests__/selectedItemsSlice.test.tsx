@@ -1,4 +1,4 @@
-import selectedItemsReducer, { addItem, removeItem, clearItems } from '../services/selectedItemsSlice';
+import selectedItemsReducer, { addItem, removeItem, clearItems } from '../app/services/selectedItemsSlice';
 
 const initialState = {
   items: [],
