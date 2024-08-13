@@ -22,12 +22,11 @@ describe('ErrorBoundary Component', () => {
 
     const button = screen.getByText('Throw Error');
 
-    // Wrap the fireEvent call in act and try-catch
     act(() => {
       try {
         fireEvent.click(button);
       } catch (error) {
-        // Error is expected, so we catch it to prevent it from failing the test
+        console.error('Caught expected error:', error);
       }
     });
 
@@ -43,7 +42,6 @@ describe('ErrorBoundary Component', () => {
 
     const button = screen.getByText('Throw Error');
 
-    // Wrap the fireEvent call in act and try-catch
     act(() => {
       try {
         fireEvent.click(button);

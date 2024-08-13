@@ -1,14 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import configureStore from 'redux-mock-store';
+import configureStore, { MockStoreEnhanced } from 'redux-mock-store';
 import SearchResults, { SearchResult } from '../src/components/SearchResults';
 import { RootState } from '../src/store/store';
 import { addItem, removeItem } from '../src/services/selectedItemsSlice';
 import { api } from '../src/services/api';
 import '@testing-library/jest-dom';
 
-
-const mockStore = configureStore([]);
+const mockStore = configureStore<RootState>([]);
 
 const initialState: RootState = {
   selectedItems: {
@@ -33,12 +32,12 @@ const initialState: RootState = {
   },
 };
 
-const renderWithProviders = (ui: React.ReactElement, { store }: { store: any }) => {
+const renderWithProviders = (ui: React.ReactElement, { store }: { store: MockStoreEnhanced<RootState> }) => {
   return render(<Provider store={store}>{ui}</Provider>);
 };
 
 describe('SearchResults Component', () => {
-  let store: any;
+  let store: MockStoreEnhanced<RootState>;
 
   beforeEach(() => {
     store = mockStore(initialState);

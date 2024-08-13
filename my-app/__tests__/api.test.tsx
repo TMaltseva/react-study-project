@@ -1,9 +1,10 @@
-import React from 'react';
+
 import { configureStore } from '@reduxjs/toolkit';
 import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { api, useFetchPeopleQuery, useFetchDetailsQuery } from '../src/services/api';
 import fetchMock from 'jest-fetch-mock';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 
 fetchMock.enableMocks();
 
@@ -17,11 +18,11 @@ const createTestStore = () => {
   });
 };
 
-interface TestComponentProps {
-  hook: () => any;
+interface TestComponentProps<T> {
+  hook: () => T;
 }
 
-const TestComponent: React.FC<TestComponentProps> = ({ hook }) => {
+const TestComponent = <T,>({ hook }: TestComponentProps<T>) => {
   const hookResult = hook();
   return <div>{JSON.stringify(hookResult)}</div>;
 };
