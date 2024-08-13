@@ -1,48 +1,49 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useFetchPeopleQuery } from '../services/api';
-import SearchBar from '../components/SearchBar';
-import SearchResults from '../components/SearchResults';
-import ErrorButton from '../components/ErrorButton';
-import Pagination from '../components/Pagination';
-import DetailsWrapper from '../components/DetailsWrapper';
-import ThemeToggleButton from '../components/ThemeToggleButton';
-import Flyout from '../components/Flyout';
+'use client';
 
-const App: React.FC = () => {
+import React, { useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useFetchPeopleQuery } from '../services/api';
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
+import Pagination from './Pagination';
+import DetailsWrapper from './DetailsWrapper';
+import ThemeToggleButton from './ThemeToggleButton';
+import Flyout from './Flyout';
+
+const ClientApp: React.FC = () => {
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const searchTerm = (router.query.search as string) || '';
-  const page = parseInt((router.query.page as string) || '1', 10);
+  const searchTerm = searchParams.get('search') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
   const { data, isLoading, isFetching } = useFetchPeopleQuery({ searchTerm, page });
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const handleSearch = (term: string, page: number = 1) => {
-    router.push({
-      pathname: '/',
-      query: { page: page.toString(), search: term },
-    });
+    const params = new URLSearchParams({ page: page.toString(), search: term });
+    router.push(`/?${params.toString()}`);
   };
 
   const handlePageChange = (page: number) => {
-    router.push({
-      pathname: '/',
-      query: { page: page.toString(), search: (router.query.search as string) || '' },
-    });
+    const params = new URLSearchParams({ page: page.toString(), search: searchTerm });
+    router.push(`/?${params.toString()}`);
   };
 
   const handleItemClick = (id: string) => {
     setSelectedId(id);
+    const params = new URLSearchParams({ page: page.toString(), search: searchTerm, details: id });
+    router.push(`/?${params.toString()}`);
   };
 
   const handleCloseDetails = () => {
     setSelectedId(null);
+    const params = new URLSearchParams({ page: page.toString(), search: searchTerm });
+    router.push(`/?${params.toString()}`);
   };
 
   return (
     <main className="sections-wrapper">
       <div className="top-section">
         <SearchBar onSearch={(term) => handleSearch(term, 1)} />
-        <ErrorButton />
         <ThemeToggleButton />
         <Flyout />
       </div>
@@ -65,4 +66,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default ClientApp;

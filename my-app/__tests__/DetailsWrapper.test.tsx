@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { useFetchDetailsQuery } from '../src/services/api';
-import DetailsWrapper from '../src/components/DetailsWrapper';
+import { useFetchDetailsQuery } from '../app/services/api';
+import DetailsWrapper from '../app/components/DetailsWrapper';
 
-jest.mock('../src/services/api');
+jest.mock('../app/services/api');
 
 test('renders loading state', () => {
   (useFetchDetailsQuery as jest.Mock).mockReturnValue({ isLoading: true });

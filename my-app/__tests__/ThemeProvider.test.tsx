@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ThemeProvider } from '../src/components/ThemeProvider';
-import { useTheme } from '../src/services/themeContext';
+import { ThemeProvider } from '../app/components/ThemeProvider';
+import { useTheme } from '../app/services/themeContext';
 import '@testing-library/jest-dom';
 
 const TestComponent = () => {

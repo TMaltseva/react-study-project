@@ -1,23 +1,45 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ThemeProvider } from '../src/components/ThemeProvider';
-import ThemeToggleButton from '../src/components/ThemeToggleButton';
+import ThemeToggleButton from '../app/components/ThemeToggleButton';
+import { useTheme } from '../app/services/themeContext';
 import '@testing-library/jest-dom';
 
+jest.mock('../app/services/themeContext', () => ({
+  useTheme: jest.fn(),
+}));
+
 describe('ThemeToggleButton', () => {
-  it('toggles theme between light and dark', () => {
-    render(
-      <ThemeProvider>
-        <ThemeToggleButton />
-      </ThemeProvider>
-    );
+  const mockToggleTheme = jest.fn();
+  const mockUseTheme = useTheme as jest.Mock;
 
-    const button = screen.getByRole('button');
-    expect(button).toHaveTextContent('Switch to dark');
+  beforeEach(() => {
+    mockUseTheme.mockReturnValue({
+      theme: 'light',
+      toggleTheme: mockToggleTheme,
+    });
+  });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders correctly with light theme', () => {
+    render(<ThemeToggleButton />);
+    expect(screen.getByText('Switch to dark')).toBeInTheDocument();
+  });
+
+  it('renders correctly with dark theme', () => {
+    mockUseTheme.mockReturnValue({
+      theme: 'dark',
+      toggleTheme: mockToggleTheme,
+    });
+    render(<ThemeToggleButton />);
+    expect(screen.getByText('Switch to light')).toBeInTheDocument();
+  });
+
+  it('calls toggleTheme on button click', () => {
+    render(<ThemeToggleButton />);
+    const button = screen.getByText('Switch to dark');
     fireEvent.click(button);
-    expect(button).toHaveTextContent('Switch to light');
-
-    fireEvent.click(button);
-    expect(button).toHaveTextContent('Switch to dark');
+    expect(mockToggleTheme).toHaveBeenCalledTimes(1);
   });
 });

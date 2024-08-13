@@ -2,7 +2,7 @@ import React from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 import { render, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { api, useFetchPeopleQuery, useFetchDetailsQuery } from '../src/services/api';
+import { api, useFetchPeopleQuery, useFetchDetailsQuery } from '../app/services/api';
 import fetchMock from 'jest-fetch-mock';
 
 fetchMock.enableMocks();

@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClientApp renders correctly and matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="sections-wrapper"
+  >
+    <div
+      class="top-section"
+    >
+      <div>
+        <label
+          for="search-input"
+        >
+          Search:
+        </label>
+        <input
+          aria-label="Search input"
+          id="search-input"
+          type="text"
+          value=""
+        />
+        <button>
+          Search
+        </button>
+      </div>
+      <button>
+        Switch to dark
+      </button>
+      <div
+        class="flyout "
+      />
+    </div>
+    <div
+      class="bottom-section"
+    >
+      <div
+        class="left-section"
+      >
+        <p>
+          Loading...
+        </p>
+      </div>
+      <div
+        class="right-section"
+      />
+    </div>
+  </main>
+</DocumentFragment>
+`;
