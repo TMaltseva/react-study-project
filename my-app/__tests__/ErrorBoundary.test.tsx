@@ -3,6 +3,14 @@ import ErrorBoundary from '../src/components/ErrorBoundary';
 import ErrorButton from '../src/components/ErrorButton';
 import '@testing-library/jest-dom';
 
+beforeAll(() => {
+  jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+
+afterAll(() => {
+  (console.error as jest.Mock).mockRestore();
+});
+
 describe('ErrorBoundary Component', () => {
   it('renders children without error', () => {
     render(
