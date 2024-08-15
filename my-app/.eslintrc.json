@@ -28,8 +28,7 @@
     "react/react-in-jsx-scope": "off",
     "react-compiler/react-compiler": "error",
     "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "error",
-    "react-refresh/only-export-components": "off",
+    "react/jsx-uses-vars": "error"
   },
   "settings": {
     "react": {
