@@ -2,8 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { addItem, removeItem } from '../services/selectedItemsSlice';
+import { Person } from '../services/api';
 
-export interface SearchResult {
+export interface SearchResult extends Person {
   name: string;
   url: string;
 }
@@ -18,7 +19,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) =
   const selectedItems = useSelector((state: RootState) => state.selectedItems.items);
 
   const handleCheckboxChange = (result: SearchResult) => {
-    const isSelected = selectedItems.some((item) => item.url === result.url);
+    const isSelected = selectedItems.some((item: SearchResult) => item.url === result.url);
     if (isSelected) {
       dispatch(removeItem(result.url));
     } else {
@@ -39,7 +40,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, onItemClick }) =
     <div className="bottom-section-elements">
       {results.map((result, index) => {
         const id = extractIdFromUrl(result.url);
-        const isSelected = selectedItems.some((item) => item.url === result.url);
+        const isSelected = selectedItems.some((item: SearchResult) => item.url === result.url);
         return (
           <div className="bottom-section-element" key={index}>
             <input

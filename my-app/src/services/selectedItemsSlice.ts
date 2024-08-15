@@ -1,35 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { SearchResult } from '../components/SearchResults';
+import { Person } from '../services/api';
 
 interface SelectedItemsState {
-  items: SearchResult[];
+  items: Person[];
 }
 
 const initialState: SelectedItemsState = {
-  items: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('selectedItems') || '[]') : [],
+  items: [],
 };
 
 const selectedItemsSlice = createSlice({
   name: 'selectedItems',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<SearchResult>) => {
+    addItem(state, action: PayloadAction<Person>) {
       state.items.push(action.payload);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedItems', JSON.stringify(state.items));
-      }
     },
-    removeItem: (state, action: PayloadAction<string>) => {
+    removeItem(state, action: PayloadAction<string>) {
       state.items = state.items.filter((item) => item.url !== action.payload);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedItems', JSON.stringify(state.items));
-      }
     },
-    clearItems: (state) => {
+    clearItems(state) {
       state.items = [];
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('selectedItems', JSON.stringify(state.items));
-      }
     },
   },
 });

@@ -45,8 +45,8 @@ describe('SearchResults Component', () => {
   });
 
   const mockResults: SearchResult[] = [
-    { name: 'Luke Skywalker', url: 'https://swapi.dev/api/people/1/' },
-    { name: 'Darth Vader', url: 'https://swapi.dev/api/people/4/' },
+    { name: 'Luke Skywalker', url: 'https://swapi.dev/api/people/1/', height: '', mass: '', hair_color: '', skin_color: '', eye_color: '', birth_year: '', gender: '' },
+    { name: 'Darth Vader', url: 'https://swapi.dev/api/people/4/', height: '', mass: '', hair_color: '', skin_color: '', eye_color: '', birth_year: '', gender: '' },
   ];
 
   it('renders "Nothing found" when results are empty', () => {
