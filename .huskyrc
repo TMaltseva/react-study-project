@@ -1,0 +1,6 @@
+{
+  "hooks": {
+    "pre-commit": "cd my-app && npm run lint",
+    "pre-push": "cd my-app && npm run test"
+  }
+}
