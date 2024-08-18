@@ -5,6 +5,7 @@ export const validationSchema = Yup.object().shape({
     .matches(/^[A-Z]/, 'Name should start with an uppercase letter')
     .required('Name is required'),
   age: Yup.number()
+    .transform((value, originalValue) => (originalValue.trim() === '' ? null : value))
     .positive('Age should be a positive number')
     .integer('Age should be an integer')
     .required('Age is required'),
