@@ -6,7 +6,6 @@ import { Button, Form, Input, Label, Select } from '../../index';
 import { validationSchema } from '../../../schemas/validationSchema';
 import { setUncontrolledData } from '../../../store/formSlice';
 import { AppDispatch, RootState } from '../../../store/store';
-import { GENDER } from './UncontrolledForm.props';
 import { LabelName } from '../../../constants/labelName';
 
 export const UncontrolledForm = () => {
@@ -21,26 +20,17 @@ export const UncontrolledForm = () => {
     email: createRef(),
     password: createRef(),
     confirmPassword: createRef(),
-    male: createRef(),
-    female: createRef(),
     picture: createRef(),
     terms: createRef(),
   });
 
-  const optionRef = useRef<{ [key: string]: RefObject<HTMLSelectElement> }>({
+  const selectRefs = useRef<{ [key: string]: RefObject<HTMLSelectElement> }>({
+    gender: createRef(),
     country: createRef(),
   });
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const selectedGender = () => {
-      return formRefs.current.male.current?.checked
-        ? GENDER.MALE
-        : formRefs.current.female.current?.checked
-          ? GENDER.FEMALE
-          : ('' as GENDER);
-    };
 
     const formData = {
       name: formRefs.current.name.current?.value || '',
@@ -48,9 +38,9 @@ export const UncontrolledForm = () => {
       email: formRefs.current.email.current?.value || '',
       password: formRefs.current.password.current?.value || '',
       confirmPassword: formRefs.current.confirmPassword.current?.value || '',
-      gender: selectedGender(),
+      gender: selectRefs.current.gender.current?.value || '',
       picture: formRefs.current.picture.current?.files?.[0],
-      country: optionRef.current.country.current?.value || '',
+      country: selectRefs.current.country.current?.value || '',
       terms: formRefs.current.terms.current?.checked || false,
     };
 
@@ -79,7 +69,6 @@ export const UncontrolledForm = () => {
       if (formData.picture) {
         reader.readAsDataURL(formData.picture);
       } else {
-        // If there's no picture, dispatch the data immediately
         dispatch(setUncontrolledData({ ...formData, picture: '' }));
         navigate('/');
       }
@@ -92,20 +81,6 @@ export const UncontrolledForm = () => {
         setErrorMap(errors);
       }
     }
-  };
-
-  const generateInputRadio = (label: string) => {
-    return (
-      <div key={label} className="wrapper">
-        <div className="input_item">
-          <Input ref={formRefs.current[GENDER.MALE]} name={label} id={GENDER.MALE} type="radio" />
-          <Label htmlFor={GENDER.MALE}>Male</Label>
-          <Input ref={formRefs.current[GENDER.FEMALE]} name={label} id={GENDER.FEMALE} type="radio" />
-          <Label htmlFor={GENDER.FEMALE}>Female</Label>
-        </div>
-        {errorMap && errorMap.gender && <p className="errors">{errorMap.gender}</p>}
-      </div>
-    );
   };
 
   const generateInput = (label: string, type: 'file' | 'text' | 'checkbox' = 'text') => {
@@ -125,7 +100,7 @@ export const UncontrolledForm = () => {
       <div key={label} className="wrapper">
         <div className="input_item">
           <Label htmlFor={label}>{label}</Label>
-          <Select ref={optionRef.current[label]} name={label} id={label}>
+          <Select ref={selectRefs.current[label]} name={label} id={label}>
             <option value="">Select a country</option>
             {countries.map((country) => (
               <option key={country} value={country}>
@@ -139,12 +114,28 @@ export const UncontrolledForm = () => {
     );
   };
 
+  const generateGenderSelect = () => {
+    return (
+      <div key="gender" className="wrapper">
+        <div className="input_item">
+          <Label htmlFor="gender">Gender</Label>
+          <Select ref={selectRefs.current.gender} name="gender" id="gender">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </Select>
+        </div>
+        {errorMap && errorMap.gender && <p className="errors">{errorMap.gender}</p>}
+      </div>
+    );
+  };
+
   return (
     <div className="uncontrolled">
       <Form onSubmit={handleSubmit}>
         {LabelName.map((label) => {
           if (label === 'gender') {
-            return generateInputRadio(label);
+            return generateGenderSelect();
           }
 
           if (label === 'country') {

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useRef, useEffect } from 'react';
-import { Nav } from '../../components/Nav/Nav';
+import { Nav } from '../../components';
 import { RootState } from '../../store/store';
 
 export const MainPage = () => {

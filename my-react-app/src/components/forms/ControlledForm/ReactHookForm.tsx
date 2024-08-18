@@ -47,20 +47,6 @@ export const ControlledForm = () => {
     }
   };
 
-  const generateInputRadio = (label: string) => {
-    return (
-      <div key={label} className="wrapper">
-        <div className="input_item">
-          <Input {...register('gender')} id="male" type="radio" value="male" />
-          <Label htmlFor="male">Male</Label>
-          <Input {...register('gender')} id="female" type="radio" value="female" />
-          <Label htmlFor="female">Female</Label>
-        </div>
-        {errors.gender && <p className="errors">{errors.gender.message}</p>}
-      </div>
-    );
-  };
-
   const generateInput = (label: string, type: 'file' | 'text' | 'checkbox' = 'text') => {
     return (
       <div key={label} className="wrapper">
@@ -92,12 +78,28 @@ export const ControlledForm = () => {
     );
   };
 
+  const generateGenderSelect = () => {
+    return (
+      <div key="gender" className="wrapper">
+        <div className="input_item">
+          <Label htmlFor="gender">Gender</Label>
+          <Select {...register('gender')} id="gender">
+            <option value="">Select gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </Select>
+        </div>
+        {errors.gender && <p className="errors">{errors.gender.message}</p>}
+      </div>
+    );
+  };
+
   return (
     <div className="controlled">
       <form className="form" onSubmit={handleSubmit(onSubmit)}>
         {LabelName.map((label) => {
           if (label === 'gender') {
-            return generateInputRadio(label);
+            return generateGenderSelect();
           }
 
           if (label === 'country') {
