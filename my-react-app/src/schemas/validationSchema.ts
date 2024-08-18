@@ -22,7 +22,7 @@ export const validationSchema = Yup.object().shape({
   picture: Yup.mixed()
     .test('fileSize', 'File is too large', (value) => {
       if (!value || !(value instanceof FileList) || value.length === 0) return true;
-      return value[0].size <= 1024 * 1024; // 1MB
+      return value[0].size <= 1024 * 1024;
     })
     .test('fileType', 'Unsupported file format', (value) => {
       if (!value || !(value instanceof FileList) || value.length === 0) return true;

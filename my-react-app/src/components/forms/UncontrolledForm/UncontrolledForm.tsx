@@ -50,11 +50,9 @@ export const UncontrolledForm = () => {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrorMap(null);
 
-      // Сохраняем данные формы без изображения сразу в Redux
       dispatch(setUncontrolledData({ ...formData, picture: '' }));
       navigate('/');
 
-      // Асинхронная обработка изображения
       if (formData.picture) {
         const reader = new FileReader();
         reader.onloadend = () => {
