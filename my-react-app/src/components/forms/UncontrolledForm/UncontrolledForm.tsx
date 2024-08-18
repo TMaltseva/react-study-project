@@ -1,16 +1,20 @@
-import { FormEvent, createRef, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { validationSchema } from '../../../schemas/validationSchema';
-import { Label, Input, Select, Button, Form } from '../../index';
-import { LabelName } from '../../../constants/labelName';
+import { createRef, FormEvent, RefObject, useRef, useState } from 'react';
 import { ValidationError } from 'yup';
-import { validCountries } from '../../../data/countries';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, Form, Input, Label, Select } from '../../index';
+import { validationSchema } from '../../../schemas/validationSchema';
+import { setUncontrolledData } from '../../../store/formSlice';
+import { AppDispatch, RootState } from '../../../store/store';
+import { LabelName } from '../../../constants/labelName';
 
 export const UncontrolledForm = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const countries = useSelector((state: RootState) => state.countries);
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
-  const formRefs = useRef<{ [key: string]: React.RefObject<HTMLInputElement> }>({
+  const formRefs = useRef<{ [key: string]: RefObject<HTMLInputElement> }>({
     name: createRef(),
     age: createRef(),
     email: createRef(),
@@ -20,7 +24,7 @@ export const UncontrolledForm = () => {
     terms: createRef(),
   });
 
-  const selectRefs = useRef<{ [key: string]: React.RefObject<HTMLSelectElement> }>({
+  const selectRefs = useRef<{ [key: string]: RefObject<HTMLSelectElement> }>({
     gender: createRef(),
     country: createRef(),
   });
@@ -44,32 +48,22 @@ export const UncontrolledForm = () => {
 
     try {
       await validationSchema.validate(formData, { abortEarly: false });
-
       setErrorMap(null);
 
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
+      // Сохраняем данные формы без изображения сразу в Redux
+      dispatch(setUncontrolledData({ ...formData, picture: '' }));
+      navigate('/');
 
-        const formDataWithImage = {
-          ...formData,
-          picture: base64String,
-        };
-
-        console.log('Form Data with Image:', formDataWithImage);
-
-        localStorage.setItem('uncontrolledFormData', JSON.stringify(formDataWithImage));
-        console.log('Data saved to localStorage');
-        navigate('/');
-      };
-
+      // Асинхронная обработка изображения
       if (formData.picture) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          const formDataWithImage = { ...formData, picture: base64String };
+          console.log('Form Data with Image:', formDataWithImage);
+          dispatch(setUncontrolledData(formDataWithImage));
+        };
         reader.readAsDataURL(formData.picture);
-      } else {
-        const formDataWithoutImage = { ...formData, picture: '' };
-        localStorage.setItem('uncontrolledFormData', JSON.stringify(formDataWithoutImage));
-        console.log('Data saved to localStorage without image');
-        navigate('/');
       }
     } catch (err) {
       if (err instanceof ValidationError) {
@@ -101,7 +95,7 @@ export const UncontrolledForm = () => {
           <Label htmlFor={label}>{label}</Label>
           <Select ref={selectRefs.current[label]} name={label} id={label}>
             <option value="">Select a country</option>
-            {validCountries.map((country: string) => (
+            {countries.map((country) => (
               <option key={country} value={country}>
                 {country}
               </option>
@@ -136,19 +130,15 @@ export const UncontrolledForm = () => {
           if (label === 'gender') {
             return generateGenderSelect();
           }
-
           if (label === 'country') {
             return generateOptions(label);
           }
-
           if (label === 'picture') {
             return generateInput(label, 'file');
           }
-
           if (label === 'terms') {
             return generateInput(label, 'checkbox');
           }
-
           return generateInput(label);
         })}
         <div className="btn_wrapper">
