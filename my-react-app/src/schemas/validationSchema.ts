@@ -21,14 +21,12 @@ export const validationSchema = Yup.object().shape({
   gender: Yup.string().required('Gender is required'),
   picture: Yup.mixed()
     .test('fileSize', 'File is too large', (value) => {
-      if (!value) return false;
-      const file = value as FileList;
-      return file && file[0].size <= 1024 * 1024;
+      if (!value || !(value instanceof FileList) || value.length === 0) return true;
+      return value[0].size <= 1024 * 1024; // 1MB
     })
     .test('fileType', 'Unsupported file format', (value) => {
-      if (!value) return false;
-      const file = value as FileList;
-      return file && ['image/jpeg', 'image/png'].includes(file[0].type);
+      if (!value || !(value instanceof FileList) || value.length === 0) return true;
+      return ['image/jpeg', 'image/png'].includes(value[0].type);
     })
     .required('Picture is required'),
   country: Yup.string().required('Country is required'),

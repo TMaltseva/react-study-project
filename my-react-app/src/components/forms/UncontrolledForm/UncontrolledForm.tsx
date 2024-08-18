@@ -1,20 +1,16 @@
-import { createRef, FormEvent, RefObject, useRef, useState } from 'react';
-import { ValidationError } from 'yup';
+import { FormEvent, createRef, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Button, Form, Input, Label, Select } from '../../index';
 import { validationSchema } from '../../../schemas/validationSchema';
-import { setUncontrolledData } from '../../../store/formSlice';
-import { AppDispatch, RootState } from '../../../store/store';
+import { Label, Input, Select, Button, Form } from '../../index';
 import { LabelName } from '../../../constants/labelName';
+import { ValidationError } from 'yup';
+import { validCountries } from '../../../data/countries';
 
 export const UncontrolledForm = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const countries = useSelector((state: RootState) => state.countries);
   const [errorMap, setErrorMap] = useState<Record<string, string> | null>(null);
 
-  const formRefs = useRef<{ [key: string]: RefObject<HTMLInputElement> }>({
+  const formRefs = useRef<{ [key: string]: React.RefObject<HTMLInputElement> }>({
     name: createRef(),
     age: createRef(),
     email: createRef(),
@@ -24,7 +20,7 @@ export const UncontrolledForm = () => {
     terms: createRef(),
   });
 
-  const selectRefs = useRef<{ [key: string]: RefObject<HTMLSelectElement> }>({
+  const selectRefs = useRef<{ [key: string]: React.RefObject<HTMLSelectElement> }>({
     gender: createRef(),
     country: createRef(),
   });
@@ -62,14 +58,17 @@ export const UncontrolledForm = () => {
 
         console.log('Form Data with Image:', formDataWithImage);
 
-        dispatch(setUncontrolledData(formDataWithImage));
+        localStorage.setItem('uncontrolledFormData', JSON.stringify(formDataWithImage));
+        console.log('Data saved to localStorage');
         navigate('/');
       };
 
       if (formData.picture) {
         reader.readAsDataURL(formData.picture);
       } else {
-        dispatch(setUncontrolledData({ ...formData, picture: '' }));
+        const formDataWithoutImage = { ...formData, picture: '' };
+        localStorage.setItem('uncontrolledFormData', JSON.stringify(formDataWithoutImage));
+        console.log('Data saved to localStorage without image');
         navigate('/');
       }
     } catch (err) {
@@ -102,7 +101,7 @@ export const UncontrolledForm = () => {
           <Label htmlFor={label}>{label}</Label>
           <Select ref={selectRefs.current[label]} name={label} id={label}>
             <option value="">Select a country</option>
-            {countries.map((country) => (
+            {validCountries.map((country: string) => (
               <option key={country} value={country}>
                 {country}
               </option>
