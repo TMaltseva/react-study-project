@@ -2,22 +2,22 @@ import * as Yup from 'yup';
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .matches(/^[A-Z]/, 'Name must start with an uppercase letter')
+    .matches(/^[A-Z]/, 'Name should start with an uppercase letter')
     .required('Name is required'),
   age: Yup.number()
-    .positive('Age must be a positive number')
-    .integer('Age must be an integer')
+    .positive('Age should be a positive number')
+    .integer('Age should be an integer')
     .required('Age is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   password: Yup.string()
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/,
-      'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, и 1 специальный символ',
+      'Password should contain at least one uppercase letter, one lowercase letter, one number and one special character',
     )
     .required('Password is required'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-    .required('Confirm Password is required'),
+    .oneOf([Yup.ref('password')], 'Passwords should match')
+    .required('Confirm password is required'),
   gender: Yup.string().required('Gender is required'),
   picture: Yup.mixed()
     .test('fileSize', 'File is too large', (value) => {
@@ -32,5 +32,5 @@ export const validationSchema = Yup.object().shape({
     })
     .required('Picture is required'),
   country: Yup.string().required('Country is required'),
-  terms: Yup.bool().oneOf([true], 'You must accept the terms and conditions').required(),
+  terms: Yup.bool().oneOf([true], 'You should accept the terms and conditions').required(),
 });
