@@ -33,13 +33,13 @@ export const UncontrolledForm = () => {
     e.preventDefault();
 
     const formData = {
-      name: formRefs.current.name.current?.value || '',
-      age: parseInt(formRefs.current.age.current?.value || '0', 10),
-      email: formRefs.current.email.current?.value || '',
-      password: formRefs.current.password.current?.value || '',
-      confirmPassword: formRefs.current.confirmPassword.current?.value || '',
+      name: formRefs.current.name.current?.value?.trim() || '',
+      age: formRefs.current.age.current?.value ? parseInt(formRefs.current.age.current.value, 10) : undefined,
+      email: formRefs.current.email.current?.value?.trim() || '',
+      password: formRefs.current.password.current?.value?.trim() || '',
+      confirmPassword: formRefs.current.confirmPassword.current?.value?.trim() || '',
       gender: selectRefs.current.gender.current?.value || '',
-      picture: formRefs.current.picture.current?.files?.[0],
+      picture: formRefs.current.picture.current?.files?.[0] || null,
       country: selectRefs.current.country.current?.value || '',
       terms: formRefs.current.terms.current?.checked || false,
     };
@@ -50,24 +50,37 @@ export const UncontrolledForm = () => {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrorMap(null);
 
-      dispatch(setUncontrolledData({ ...formData, picture: '' }));
-      navigate('/');
-
       if (formData.picture) {
         const reader = new FileReader();
         reader.onloadend = () => {
           const base64String = reader.result as string;
-          const formDataWithImage = { ...formData, picture: base64String };
-          console.log('Form Data with Image:', formDataWithImage);
-          dispatch(setUncontrolledData(formDataWithImage));
+          dispatch(
+            setUncontrolledData({
+              ...formData,
+              age: formData.age || 0,
+              picture: base64String,
+            }),
+          );
         };
         reader.readAsDataURL(formData.picture);
+      } else {
+        dispatch(
+          setUncontrolledData({
+            ...formData,
+            age: formData.age || 0,
+            picture: '',
+          }),
+        );
       }
+
+      navigate('/');
     } catch (err) {
       if (err instanceof ValidationError) {
         const errors: Record<string, string> = {};
         err.inner.forEach((error) => {
-          errors[error.path as string] = error.message;
+          if (error.path) {
+            errors[error.path] = error.message;
+          }
         });
         setErrorMap(errors);
       }
