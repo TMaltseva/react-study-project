@@ -56,7 +56,6 @@
   height: 50px;
 }
 
-
 .form {
   margin-top: 2rem;
   display: flex;
@@ -179,6 +178,7 @@ a.active {
   text-transform: lowercase;
   max-width: 40rem;
   padding-right: 30px;
+  text-align: end;
 }
 
 .main-page {
