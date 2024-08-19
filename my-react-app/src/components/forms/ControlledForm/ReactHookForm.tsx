@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setControlledData } from '../../../store/formSlice';
 import { AppDispatch } from '../../../store/store';
 import { validCountries } from '../../../data/countries';
-import { validationSchema } from '../../../schemas/validationSchema';
+import { controlledValidationSchema } from '../../../schemas/controlledValidationSchema';
 import { Button, Input, Label, Select } from '../../index';
 import { LabelName } from '../../../constants/labelName';
 
@@ -20,7 +20,7 @@ interface IFormInput {
   country: string;
 }
 
-const resolver: Resolver<IFormInput> = yupResolver(validationSchema) as unknown as Resolver<IFormInput>;
+const resolver: Resolver<IFormInput> = yupResolver(controlledValidationSchema) as unknown as Resolver<IFormInput>;
 
 export const ControlledForm = () => {
   const dispatch = useDispatch<AppDispatch>();

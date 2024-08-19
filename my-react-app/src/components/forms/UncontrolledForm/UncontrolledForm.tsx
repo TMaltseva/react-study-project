@@ -3,7 +3,7 @@ import { ValidationError } from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input, Label, Select } from '../../index';
-import { validationSchema } from '../../../schemas/validationSchema';
+import { uncontrolledValidationSchema } from '../../../schemas/uncontrolledValidationSchema';
 import { setUncontrolledData } from '../../../store/formSlice';
 import { AppDispatch, RootState } from '../../../store/store';
 import { LabelName } from '../../../constants/labelName';
@@ -47,7 +47,7 @@ export const UncontrolledForm = () => {
     console.log('Form Data:', formData);
 
     try {
-      await validationSchema.validate(formData, { abortEarly: false });
+      await uncontrolledValidationSchema.validate(formData, { abortEarly: false });
       setErrorMap(null);
 
       if (formData.picture) {
